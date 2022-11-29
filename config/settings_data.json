@@ -96,7 +96,7 @@
           "featured-collections-0": {
             "type": "collection",
             "settings": {
-              "collection": "new-arrival"
+              "collection": "new-arrivals"
             }
           },
           "featured-collections-1": {
@@ -187,7 +187,7 @@
       "aeb7561d-25da-4f28-b818-07f3142cf787": {
         "type": "featured-products",
         "settings": {
-          "collection": "new-arrival",
+          "collection": "new-arrivals",
           "rows": 2
         }
       }
