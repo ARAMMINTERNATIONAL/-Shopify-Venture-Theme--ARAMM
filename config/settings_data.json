@@ -53,11 +53,22 @@
               "button_label": "Shop Now",
               "button_link": "shopify:\/\/collections\/backpacks-collection"
             }
+          },
+          "d0e535ea-ccb3-4f45-a183-e7b4c9174e00": {
+            "type": "slide",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/white-painted-wall-texture-background_290d10cd-5b71-4f1e-a64a-87d8fc0c063d.png",
+              "image_position": "center center",
+              "title": "Slide",
+              "button_label": "View all products",
+              "button_link": ""
+            }
           }
         },
         "block_order": [
           "placeholder-0",
-          "placeholder-1"
+          "placeholder-1",
+          "d0e535ea-ccb3-4f45-a183-e7b4c9174e00"
         ],
         "settings": {
           "hero_home_height": "adapt",
