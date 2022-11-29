@@ -51,7 +51,7 @@
               "image_position": "center center",
               "title": "",
               "button_label": "Shop Now",
-              "button_link": "shopify:\/\/collections\/backpacks"
+              "button_link": "shopify:\/\/collections\/backpacks-collection"
             }
           }
         },
@@ -173,7 +173,7 @@
       "331552b4-354a-476c-b474-0244b1feffcd": {
         "type": "featured-products",
         "settings": {
-          "collection": "backpacks",
+          "collection": "backpacks-collection",
           "rows": 2
         }
       },
