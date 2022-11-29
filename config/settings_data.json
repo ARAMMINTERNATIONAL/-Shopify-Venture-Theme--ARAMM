@@ -59,8 +59,8 @@
             "settings": {
               "image": "shopify:\/\/shop_images\/white-painted-wall-texture-background_290d10cd-5b71-4f1e-a64a-87d8fc0c063d.png",
               "image_position": "center center",
-              "title": "Slide",
-              "button_label": "View all products",
+              "title": "",
+              "button_label": "",
               "button_link": ""
             }
           }
