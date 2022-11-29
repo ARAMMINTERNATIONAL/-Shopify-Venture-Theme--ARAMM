@@ -124,7 +124,7 @@
       "featured-products": {
         "type": "featured-products",
         "settings": {
-          "collection": "frontpage",
+          "collection": "featured",
           "rows": 2
         }
       },
