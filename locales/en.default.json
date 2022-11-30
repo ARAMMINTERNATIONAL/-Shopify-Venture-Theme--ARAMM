@@ -322,6 +322,11 @@
   "shopify": {
     "links": {
       "powered_by_shopify": " "
+    },
+    "checkout": {
+      "remember_me": {
+        "description_html": " "
+      }
     }
   }
 }
