@@ -25,7 +25,7 @@
       "signup_form_success": "We will send you an email right before we open!",
       "admin_link_html": "Are you the store owner? <a href=\"\/admin\" class=\"text-link\">Log in here<\/a>",
       "password_link": "Enter using password",
-      "powered_by_shopify_html": " "
+      "powered_by_shopify_html": "BANGLADESH"
     },
     "social": {
       "share_title": "Share",
@@ -321,7 +321,7 @@
   },
   "shopify": {
     "links": {
-      "powered_by_shopify": " "
+      "powered_by_shopify": " BANGLADESH"
     },
     "checkout": {
       "remember_me": {
