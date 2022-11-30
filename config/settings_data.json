@@ -206,6 +206,24 @@
           "collection": "new-arrivals",
           "rows": 2
         }
+      },
+      "6cb4d77f-df50-4fe4-acc3-ccb1887ba033": {
+        "type": "advanced-content",
+        "blocks": {
+          "6cb4d77f-df50-4fe4-acc3-ccb1887ba033-166978714749f04e28-0": {
+            "type": "html",
+            "settings": {
+              "code": "<a href=\"https:\/\/www.daraz.com.bd\/shop\/aramm1656507173\/\" target=\"_blank\" rel=\"noopener noreferrer\"><div style=\"text-align:center;\">\n<h2> VISIT ARAMM. STORE ON DARAZ <\/h2>GET UPTO 50% OFF, FREE SHIPING, VOUCHARS, CASH BACKS AND MANY MORE.<\/div>\n<\/a>",
+              "width": "100%",
+              "alignment": "top-middle"
+            }
+          }
+        },
+        "block_order": [
+          "6cb4d77f-df50-4fe4-acc3-ccb1887ba033-166978714749f04e28-0"
+        ],
+        "settings": {
+        }
       }
     },
     "content_for_index": [
@@ -215,7 +233,8 @@
       "featured-products",
       "89f9c050-bc50-4cad-9915-821ac98bd93c",
       "331552b4-354a-476c-b474-0244b1feffcd",
-      "8af78ab2-f13a-46dc-9518-e5be9f34a71c"
+      "8af78ab2-f13a-46dc-9518-e5be9f34a71c",
+      "6cb4d77f-df50-4fe4-acc3-ccb1887ba033"
     ]
   },
   "presets": {
