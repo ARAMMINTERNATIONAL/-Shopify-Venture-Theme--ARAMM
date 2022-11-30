@@ -1,103 +1,133 @@
 <!doctype html>
 <html class="no-js" lang="{{ request.locale.iso_code }}">
-<head>
+  <head>
+    <script src="{{ 'product_boom_points.js' | asset_url }}" defer="defer"></script>
+    <script id="bm_product_variants" type="application/json">
+      {{ product.variants | json }}
+    </script>
+    <script id="bm_product_selected_or_first_available_variant" type="application/json">
+      {{ product.selected_or_first_available_variant | json }}
+    </script>
+    <script id="bm_product_metafields" type="application/json">
+      {{ shop.metafields.boom-sealapps-app.effective-time | json }}
+    </script>
+    {%- comment -%}DHSEO_START{%- endcomment -%}
+    {% capture dh %}{% include 'dhseo-snippet' %}{% endcapture %}
+    {% unless dh contains 'Liquid error' %}{% include 'dhseo-snippet' %}{% endunless %}
+    {%- comment -%}DHSEO_END{%- endcomment -%}
 
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="{{ settings.color_header_bg }}">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HKR224RLVZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-  {% if settings.favicon != blank %}
-    <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
-  {% endif %}
+      gtag('config', 'G-HKR224RLVZ');
+    </script>
 
-  <link rel="canonical" href="{{ canonical_url }}">
-  <title>
-  {{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
-  </title>
+    <meta name="google-site-verification" content="alPKoda_4dbX7MHAjGGbN5ojFeC6dhq2OsLTLh8wbdw">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="{{ settings.color_header_bg }}">
+    <meta name="facebook-domain-verification" content="duh8xnfdvo8iawb1hjwjeyeq1tbg4w">
 
-  {% if page_description %}
-    <meta name="description" content="{{ page_description | escape }}">
-  {% endif %}
+    {% if settings.favicon != blank %}
+      <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
+    {% endif %}
 
-  {% include 'social-meta-tags' %}
-  {% render 'css-variables' %}
+    <link rel="canonical" href="{{ canonical_url }}">
+    <title>
+      {{ page_title }}
+      {% if current_tags -%}
+        {%- assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}
+      {%- endif %}
+      {% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}
+      {% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+    </title>
 
-  <script>
-    document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
-  </script>
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
 
-  {{ 'theme.scss.css' | asset_url | stylesheet_tag }}
+    {% include 'social-meta-tags' %}
+    {% render 'css-variables' %}
 
-  <script>
-    window.theme = window.theme || {};
+    <script>
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+    </script>
 
-    theme.strings = {
-      stockAvailable: {{ 'products.product.stock_available' | t: count: '1' | json }},
-      addToCart: {{ 'products.product.add_to_cart' | t | json }},
-      soldOut: {{ 'products.product.sold_out' | t | json }},
-      unavailable: {{ 'products.product.unavailable' | t | json }},
-      noStockAvailable: {{ 'products.product.stock_unavailable' | t | json }},
-      willNotShipUntil: {{ 'products.product.will_not_ship_until' | t: date: '[date]' | json }},
-      willBeInStockAfter: {{ 'products.product.will_be_in_stock_after' | t: date: '[date]' | json }},
-      totalCartDiscount: {{ 'cart.general.savings_html' | t: price: '[savings]' | json }},
-      addressError: {{ 'sections.map.address_error' | t | json }},
-      addressNoResults: {{ 'sections.map.address_no_results' | t | json }},
-      addressQueryLimit: {{ 'sections.map.address_query_limit_html' | t | json }},
-      authError: {{ 'sections.map.auth_error_html' | t | json }},
-      slideNumber: {{ 'homepage.hero.slide_number' | t: slide_number: '[slide_number]' | json }}
-    };
+    {{ 'theme.scss.css' | asset_url | stylesheet_tag }}
 
-    {%- if template == 'collection' -%}
-      {%- if current_tags -%}
-        {%- capture tag_handles -%}
-            {%- for tag in current_tags -%}
-              {{- tag | handle | append: '|' -}}
-            {%- endfor -%}
-        {%- endcapture -%}
-      {%- endif -%}
-      theme.backToCollection = {
-        collection: {
-          title: {{ collection.title | json }},
-          link: "{{ shop.url }}{{ collection.url }}{%- if current_tags -%}/{{- tag_handles | split: '|' | join: '+' -}}{%- endif -%}"
-        }
-      };
-      sessionStorage.setItem("backToCollection", JSON.stringify(theme.backToCollection.collection));
-
-    {%- elsif template != 'product' -%}
-      if (sessionStorage.getItem("backToCollection")) {
-        sessionStorage.removeItem("backToCollection")
-      }
-    {%- endif -%}
-  </script>
-
-  <script src="{{ 'lazysizes.min.js' | asset_url }}" async="async"></script>
-
-  {% if request.page_type contains 'customers/' %}
-    <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script>
-  {% endif %}
-
-  <script src="{{ 'vendor.js' | asset_url }}" defer="defer"></script>
-
-  {% if request.page_type == 'product' or request.page_type == 'cart' or request.page_type == 'index' %}
     <script>
       window.theme = window.theme || {};
-      theme.moneyFormat = {{ shop.money_format | json }};
+
+      theme.strings = {
+        stockAvailable: {{ 'products.product.stock_available' | t: count: '1' | json }},
+        addToCart: {{ 'products.product.add_to_cart' | t | json }},
+        soldOut: {{ 'products.product.sold_out' | t | json }},
+        unavailable: {{ 'products.product.unavailable' | t | json }},
+        noStockAvailable: {{ 'products.product.stock_unavailable' | t | json }},
+        willNotShipUntil: {{ 'products.product.will_not_ship_until' | t: date: '[date]' | json }},
+        willBeInStockAfter: {{ 'products.product.will_be_in_stock_after' | t: date: '[date]' | json }},
+        totalCartDiscount: {{ 'cart.general.savings_html' | t: price: '[savings]' | json }},
+        addressError: {{ 'sections.map.address_error' | t | json }},
+        addressNoResults: {{ 'sections.map.address_no_results' | t | json }},
+        addressQueryLimit: {{ 'sections.map.address_query_limit_html' | t | json }},
+        authError: {{ 'sections.map.auth_error_html' | t | json }},
+        slideNumber: {{ 'homepage.hero.slide_number' | t: slide_number: '[slide_number]' | json }}
+      };
+
+      {%- if template == 'collection' -%}
+        {%- if current_tags -%}
+          {%- capture tag_handles -%}
+              {%- for tag in current_tags -%}
+                {{- tag | handle | append: '|' -}}
+              {%- endfor -%}
+          {%- endcapture -%}
+        {%- endif -%}
+        theme.backToCollection = {
+          collection: {
+            title: {{ collection.title | json }},
+            link: "{{ shop.url }}{{ collection.url }}{%- if current_tags -%}/{{- tag_handles | split: '|' | join: '+' -}}{%- endif -%}"
+          }
+        };
+        sessionStorage.setItem("backToCollection", JSON.stringify(theme.backToCollection.collection));
+
+      {%- elsif template != 'product' -%}
+        if (sessionStorage.getItem("backToCollection")) {
+          sessionStorage.removeItem("backToCollection")
+        }
+      {%- endif -%}
     </script>
-  {% endif %}
 
-  <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'lazysizes.min.js' | asset_url }}" async="async"></script>
 
-  {{ content_for_header }}
-</head>
+    {% if request.page_type contains 'customers/' %}
+      <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script>
+    {% endif %}
 
-<body class="template-{{ request.page_type | handle }}" >
-  <!-- Messenger Chat Plugin Code -->
+    <script src="{{ 'vendor.js' | asset_url }}" defer="defer"></script>
+
+    {% if request.page_type == 'product' or request.page_type == 'cart' or request.page_type == 'index' %}
+      <script>
+        window.theme = window.theme || {};
+        theme.moneyFormat = {{ shop.money_format | json }};
+      </script>
+    {% endif %}
+
+    <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+
+    {{ content_for_header }}
+  </head>
+
+  <body class="template-{{ request.page_type | handle }}">
+    <!-- Messenger Chat Plugin Code -->
     <div id="fb-root"></div>
 
     <!-- Your Chat Plugin code -->
-    <div id="fb-customer-chat" class="fb-customerchat">
-    </div>
+    <div id="fb-customer-chat" class="fb-customerchat"></div>
 
     <script>
       var chatbox = document.getElementById('fb-customer-chat');
@@ -123,53 +153,53 @@
       }(document, 'script', 'facebook-jssdk'));
     </script>
 
-  <a class="in-page-link visually-hidden skip-link" href="#MainContent">
-    {{ 'general.accessibility.skip_to_content' | t }}
-  </a>
+    <a class="in-page-link visually-hidden skip-link" href="#MainContent">
+      {{ 'general.accessibility.skip_to_content' | t }}
+    </a>
 
-  {% section 'header' %}
+    {% section 'header' %}
 
-  <div class="page-container page-element is-moved-by-drawer">
-    <main class="main-content" id="MainContent" role="main">
-      {{ content_for_layout }}
-    </main>
+    <div class="page-container page-element is-moved-by-drawer">
+      <main class="main-content" id="MainContent" role="main">
+        {{ content_for_layout }}
+      </main>
 
-    {% section 'footer' %}
-  </div>
-
-  <script id="QuantityTemplate" type="text/template">
-    {% raw %}
-      <div class="js-qty">
-        <input type="text" value="{{ value }}" id="{{ key }}" name="{{ name }}" pattern="[0-9]*" data-line="{{ line }}" class="js-qty__input" aria-live="polite">
-        <button type="button" class="js-qty__adjust js-qty__adjust--minus" aria-label="{% endraw %}{{ 'cart.label.decrease_quantity' | t }}{% raw %}">
-          {% endraw %}{% include 'icon-minus' %}{% raw %}
-          <span class="icon__fallback-text">−</span>
-        </button>
-        <button type="button" class="js-qty__adjust js-qty__adjust--plus" aria-label="{% endraw %}{{ 'cart.label.increase_quantity' | t }}{% raw %}">
-          {% endraw %}{% include 'icon-plus' %}{% raw %}
-          <span class="icon__fallback-text">+</span>
-        </button>
-      </div>
-    {% endraw %}
-  </script>
-
-  {% if request.page_type == 'product' %}
-    <div id="ProductModal" class="modal">
-      <div class="modal__inner">
-        <img src="" id="ProductZoomImg" class="product-modal__image">
-      </div>
-      <button type="button" class="modal__close js-modal-close text-link">
-        {% include 'icon-close' %}
-        <span class="icon__fallback-text">{{ 'general.accessibility.close_modal' | t | json }}</span>
-      </button>
+      {% section 'footer' %}
     </div>
-  {% endif %}
 
-  <ul hidden>
-    <li id="a11y-refresh-page-message">{{ 'general.accessibility.refresh_page' | t }}</li>
-    <li id="a11y-selection-message">{{ 'general.accessibility.selection_help' | t }}</li>
-    <li id="a11y-slideshow-info">{{- 'homepage.hero.navigation_instructions' | t -}}</li>
-  </ul>
-  {% include 'revy-discounts-script' %}
-</body>
+    <script id="QuantityTemplate" type="text/template">
+      {% raw %}
+        <div class="js-qty">
+          <input type="text" value="{{ value }}" id="{{ key }}" name="{{ name }}" pattern="[0-9]*" data-line="{{ line }}" class="js-qty__input" aria-live="polite">
+          <button type="button" class="js-qty__adjust js-qty__adjust--minus" aria-label="{% endraw %}{{ 'cart.label.decrease_quantity' | t }}{% raw %}">
+            {% endraw %}{% include 'icon-minus' %}{% raw %}
+            <span class="icon__fallback-text">−</span>
+          </button>
+          <button type="button" class="js-qty__adjust js-qty__adjust--plus" aria-label="{% endraw %}{{ 'cart.label.increase_quantity' | t }}{% raw %}">
+            {% endraw %}{% include 'icon-plus' %}{% raw %}
+            <span class="icon__fallback-text">+</span>
+          </button>
+        </div>
+      {% endraw %}
+    </script>
+
+    {% if request.page_type == 'product' %}
+      <div id="ProductModal" class="modal">
+        <div class="modal__inner">
+          <img src="" id="ProductZoomImg" class="product-modal__image">
+        </div>
+        <button type="button" class="modal__close js-modal-close text-link">
+          {% include 'icon-close' %}
+          <span class="icon__fallback-text">{{ 'general.accessibility.close_modal' | t | json }}</span>
+        </button>
+      </div>
+    {% endif %}
+
+    <ul hidden>
+      <li id="a11y-refresh-page-message">{{ 'general.accessibility.refresh_page' | t }}</li>
+      <li id="a11y-selection-message">{{ 'general.accessibility.selection_help' | t }}</li>
+      <li id="a11y-slideshow-info">{{- 'homepage.hero.navigation_instructions' | t -}}</li>
+    </ul>
+    {% include 'revy-discounts-script' %}
+  </body>
 </html>
