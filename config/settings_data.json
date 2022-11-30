@@ -118,7 +118,7 @@
           "featured-collections-1": {
             "type": "collection",
             "settings": {
-              "collection": "hot-items"
+              "collection": "best-seller"
             }
           },
           "featured-collections-2": {
